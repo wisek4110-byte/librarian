@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>오방색 도형 (반응형)</title>
+  <title>오방색 도형 (삼각형 반응형)</title>
   <style>
     * {
       margin: 0;
@@ -19,116 +19,113 @@
       font-family: "Malgun Gothic", sans-serif;
     }
 
-    /* 전체 도형 박스: 화면 크기에 따라 자동 축소/확대 */
+    /* 전체 컨테이너 */
     .wrapper {
       position: relative;
-      width: min(70vmin, 480px);  /* 화면 짧은 변의 70%, 최대 480px */
-      aspect-ratio: 1 / 1;        /* 항상 정사각형 유지 */
+      width: min(70vmin, 420px);
+      aspect-ratio: 1 / 1;
     }
 
-    /* 텍스트 크기는 화면 크기에 맞춰 자동 조절 */
-    .center,
-    .diamond {
-      font-weight: bold;
-      text-align: center;
-      line-height: 1.5;
-      font-size: clamp(0.8rem, 2.2vmin, 1.4rem);
+    /* 중앙 사각형 */
+    .center {
+      position: absolute;
+      width: 60%;
+      height: 60%;
+      top: 20%;
+      left: 20%;
+      background: #ffe600;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      text-align: center;
+      font-weight: bold;
+      font-size: clamp(0.8rem, 2.2vmin, 1.4rem);
+      z-index: 2; /* 최상단 */
     }
 
-    /* 중앙 정사각형 (노란색) */
-    .center {
+    /* 공통 삼각형 스타일 */
+    .triangle {
       position: absolute;
-      width: 50%;
-      height: 50%;
-      top: 25%;
-      left: 25%;
-      background: #ffe600;
+      width: 0;
+      height: 0;
+      font-weight: bold;
+      font-size: clamp(0.7rem, 2vmin, 1.2rem);
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      z-index: 1;
     }
 
-    /* 다이아몬드 공통 (위/아래/좌/우) */
-    .diamond {
-      position: absolute;
-      width: 50%;
-      height: 50%;
-      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    }
-
-    /* 북쪽 */
+    /* 북쪽 삼각형 */
     .top {
+      border-left: 15% solid transparent;
+      border-right: 15% solid transparent;
+      border-bottom: 22% solid #000000;
       top: 0;
-      left: 25%;
-      background: #000000;
-      color: #ffffff;
+      left: 35%;
     }
 
-    /* 남쪽 */
+    /* 남쪽 삼각형 */
     .bottom {
-      top: 50%;
-      left: 25%;
-      background: #e22222;
-      color: #ffffff;
+      border-left: 15% solid transparent;
+      border-right: 15% solid transparent;
+      border-top: 22% solid #e22222;
+      bottom: 0;
+      left: 35%;
     }
 
-    /* 동쪽 */
+    /* 동쪽 삼각형 */
     .right {
-      top: 25%;
-      left: 50%;
-      background: #28327d;
-      color: #ffffff;
+      border-top: 15% solid transparent;
+      border-bottom: 15% solid transparent;
+      border-left: 22% solid #28327d;
+      top: 35%;
+      right: 0;
     }
 
-    /* 서쪽 */
+    /* 서쪽 삼각형 */
     .left {
-      top: 25%;
+      border-top: 15% solid transparent;
+      border-bottom: 15% solid transparent;
+      border-right: 22% solid #ffffff;
+      top: 35%;
       left: 0;
-      background: #ffffff;
-      border: 0.25vmin solid #000000;
-      color: #000000;
+      color: black;
+      border-right-color: #ffffff;
+      border-width: 0;
     }
+
+    /* 서쪽 테두리 */
+    .left::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      transform: translate(-50%, -50%);
+      width: 0;
+      height: 0;
+      border-top: 15% solid transparent;
+      border-bottom: 15% solid transparent;
+      border-right: 22% solid #000000;
+      z-index: -1;
+    }
+
+    /* 텍스트가 삼각형 중앙에 위치하도록 배치 */
+    .triangle span {
+      position: absolute;
+      transform: translateY(0);
+      line-height: 1.4;
+    }
+
   </style>
 </head>
 <body>
 
 <div class="wrapper">
+
   <!-- 중앙 -->
   <div class="center">
-    <span>중앙</span>
-    <span>토(土)</span>
-    <span>황룡</span>
-  </div>
-
-  <!-- 북쪽 -->
-  <div class="diamond top">
-    <span>북쪽</span>
-    <span>수(水)</span>
-    <span>현무</span>
-  </div>
-
-  <!-- 동쪽 -->
-  <div class="diamond right">
-    <span>동쪽</span>
-    <span>목(木)</span>
-    <span>청룡</span>
-  </div>
-
-  <!-- 남쪽 -->
-  <div class="diamond bottom">
-    <span>남쪽</span>
-    <span>화(火)</span>
-    <span>주작</span>
-  </div>
-
-  <!-- 서쪽 -->
-  <div class="diamond left">
-    <span>서쪽</span>
-    <span>금(金)</span>
-    <span>백호</span>
-  </div>
-</div>
-
-</body>
-</html>
+    중앙<br>토(土)<b
