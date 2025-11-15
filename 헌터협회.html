@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>협회 조직도</title>
+    <style>
+        /* 조직도 스타일 */
+        .organization-chart {
+            list-style: none; /* 기본 리스트 마커 제거 */
+            padding-left: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+        }
+
+        .organization-chart ul {
+            list-style: none;
+            padding-left: 20px; /* 하위 항목 들여쓰기 */
+            border-left: 1px solid #ccc; /* 계층 구조 시각화 라인 */
+            margin-left: 10px;
+        }
+
+        .organization-chart > li {
+            font-weight: bold; /* 최상위 레벨 강조 */
+            margin-bottom: 5px;
+        }
+
+        .level-1 { /* 협회장 직속 기관/실/국 */
+            color: #333;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        .level-2 { /* 과/부속기구 */
+            color: #555;
+            font-size: 1em;
+            font-weight: normal;
+        }
+
+        .level-3 { /* 팀 */
+            color: #777;
+            font-size: 0.95em;
+            font-weight: normal;
+        }
+
+        /* 계층별 아이콘/표시자 */
+        .organization-chart > li:before { content: "👑 "; } /* 협회장 */
+        .level-1 > span:before { content: "🏛️ "; } /* 국/실/소 */
+        .level-2 > span:before { content: "📂 "; } /* 과 */
+        .level-3 > span:before { content: "🛠️ "; } /* 팀 */
+
+    </style>
+</head>
+<body>
+
+<ul class="organization-chart">
+    <li>
+        <span>협회장 : 허태준</span>
+        <ul>
+            <li class="level-1">
+                <span>비서실 (실장: 차백은)</span>
+                <ul>
+                    <li class="level-3"><span>정책보좌팀</span></li>
+                    <li class="level-3"><span>일정관리팀</span></li>
+                    <li class="level-3"><span>대외연락팀</span></li>
+                </ul>
+            </li>
+
+            <li class="level-1">
+                <span>특별조사국 (국장: 서준혁)</span>
+            </li>
+            
+            <li class="level-1">
+                <span>정책기획실</span>
+                <ul>
+                    <li class="level-2">
+                        <span>정책기획과</span>
+                        <ul>
+                            <li class="level-3"><span>헌터법령정비팀</span></li>
+                            <li class="level-3"><span>제도개선팀</span></li>
+                        </ul>
+                    </li>
+                    <li class="level-2">
+                        <span>전략조정과</span>
+                        <ul>
+                            <li class="level-3"><span>중장기계획팀</span></li>
+                            <li class="level-3"><span>예산편성조정팀</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="level-1">
+                <span>등록관리국</span>
+                <ul>
+                    <li class="level-2">
+                        <span>등록심사과</span>
+                        <ul>
+                            <li class="level-3"><span>능력등급평가팀</span></li>
+                            <li class="level-3"><span>등록정보관리팀</span></li>
+                        </ul>
+                    </li>
+                    <li class="level-2">
+                        <span>인증관리과</span>
+                        <ul>
+                            <li class="level-3"><span>각성자/능력인증발급팀</span></li>
+                            <li class="level-3"><span>변이모니터링팀</span></li>
+                        </ul>
+                    </li>
+                    <li class="level-2">
+                        <span>길드관리과</span>
+                        <ul>
+                            <li class="level-3"><span>길드심사/등록팀</span></li>
+                            <li class="level-3"><span>길드감찰팀</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="level-1">
+                <span>던전관리국</span>
+                <ul>
+                    <li class="level-2">
+                        <span>던전운영과</span>
+                        <ul>
+                            <li class="level-3"><span>정기조사팀</span></li>
+                            <li class="level-3"><span>출입허가심의팀</span></li>
+                        </ul>
+                    </li>
+                    <li class="level-2">
+                        <span>던전위험대응과</span>
+                        <ul>
+                            <li class="level-3"><span>위기경보관리팀</span></li>
+                            <li class="level-3"><span>등급분류심사팀</span></li>
+                        </ul>
+                    </li>
+                    <li class="level-2">
+                        <span>던전분석과</span>
+                        <ul>
+                            <li class="level-3"><span>구조·지형분석팀</span></li>
+                            <li class="level-3"><span>분석연구팀</span></li>
+                        </ul>
+                    </li>
+                    <li class="level-2">
+                        <span>현장작전과</span> 
+                        <ul>
+                            <li class="level-3"><span>긴급출동팀</span></li>
+                            <li class="level-3"><span>상황지휘지원팀</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="level-1">
+                <span>작전통제국</span>
+                <ul>
+                    <li class="level-2">
+                        <span>전략기획과</span>
+                        <ul>
+                            <li class="level-3"><span>헌터전략조정팀</span></li>
+                            <li class="level-3"><span>대형전투계획팀</span></li>
+                        </ul>
+                    </li>
+                    <li class="level-2">
+                        <span>연계협력과</span>
+                        <ul>
+                            <li class="level-3"><span>군·경 공조팀</span></li>
+                            <li class="level-3"><span>국제지원작전팀</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="level-1">
+                <span>기술연구소</span>
+                <ul>
+                    <li class="level-2">
+                        <span>이능연구과</span>
+                        <ul>
+                            <li class="level-3"><span>능력유형분석팀</span></li>
+                            <li class="level-3"><span>학술협력팀</span></li>
+                        </ul>
+                    </li>
+                    <li class="level-2">
+                        <span>장비개발과</span>
+                        <ul>
+                            <li class="level-3"><span>헌터장비 및 아이템연구팀</span></li>
+                            <li class="level-3"><span>마정석응용팀</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="level-1">
+                <span>후생복지과</span> 
+                <ul>
+                    <li class="level-3"><span>복지운영팀</span></li>
+                    <li class="level-3"><span>심리지원팀</span></li>
+                    <li class="level-3"><span>유가족보호팀</span></li>
+                </ul>
+            </li>
+            
+            <li class="level-1">
+                <span>대외협력실</span>
+                <ul>
+                    <li class="level-2">
+                        <span>국내협력과</span>
+                        <ul>
+                            <li class="level-3"><span>길드연계팀</span></li>
+                            <li class="level-3"><span>민간지원조정팀</span></li>
+                        </ul>
+                    </li>
+                    <li class="level-2">
+                        <span>국제협력과</span>
+                        <ul>
+                            <li class="level-3"><span>국제헌터연맹담당팀</span></li>
+                            <li class="level-3"><span>해외정보교류팀</span></li>
+                        </ul>
+                    </li>
+                    <li class="level-2">
+                        <span>홍보과</span>
+                        <ul>
+                            <li class="level-3"><span>언론대응팀</span></li>
+                            <li class="level-3"><span>대국민홍보팀</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="level-1">
+                <span>독립 부속기구</span>
+                <ul>
+                    <li class="level-2"><span>헌터의료센터</span></li>
+                    <li class="level-2"><span>협회법무단</span></li>
+                    <li class="level-2"><span>기록관</span></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+</body>
+</html>
