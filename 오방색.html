@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>오방색 도형 (삼각형 반응형)</title>
+  <title>오방색 도형 (삼각형·반응형)</title>
   <style>
     * {
       margin: 0;
@@ -19,138 +19,117 @@
       font-family: "Malgun Gothic", sans-serif;
     }
 
-    /* 전체 컨테이너 */
+    /* 전체 컨테이너 : 화면 비율에 따라 자동 크기 조정 */
     .wrapper {
       position: relative;
       width: min(70vmin, 420px);
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 1 / 1;  /* 항상 정사각형 */
     }
 
-    /* 중앙 사각형 */
+    /* 중앙 노란 정사각형 */
     .center {
       position: absolute;
-      width: 60%;
-      height: 60%;
-      top: 20%;
-      left: 20%;
+      width: 50%;
+      height: 50%;
+      top: 25%;
+      left: 25%;
       background: #ffe600;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
       text-align: center;
       font-weight: bold;
-      font-size: clamp(0.8rem, 2.2vmin, 1.4rem);
-      z-index: 2; /* 최상단 */
+      font-size: clamp(0.9rem, 2.4vmin, 1.4rem);
+      line-height: 1.5;
+      z-index: 2; /* 가장 위 (필요 시) */
     }
 
-    /* 공통 삼각형 스타일 */
+    /* 공통 삼각형 스타일 (정사각형 바깥에만 위치) */
     .triangle {
       position: absolute;
-      width: 0;
-      height: 0;
-      font-weight: bold;
-      font-size: clamp(0.7rem, 2vmin, 1.2rem);
-      text-align: center;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
-      z-index: 1;
+      text-align: center;
+      font-weight: bold;
+      font-size: clamp(0.8rem, 2.2vmin, 1.3rem);
+      line-height: 1.5;
+      color: #fff;
     }
 
-    /* 북쪽 삼각형 */
+    /* 북쪽 삼각형 (위쪽) */
     .top {
-      border-left: 15% solid transparent;
-      border-right: 15% solid transparent;
-      border-bottom: 22% solid #000000;
+      width: 50%;
+      height: 25%;
       top: 0;
-      left: 35%;
+      left: 25%;
+      background: #000000;
+      clip-path: polygon(0 100%, 50% 0, 100% 100%);
     }
 
-    /* 남쪽 삼각형 */
+    /* 남쪽 삼각형 (아래쪽) */
     .bottom {
-      border-left: 15% solid transparent;
-      border-right: 15% solid transparent;
-      border-top: 22% solid #e22222;
+      width: 50%;
+      height: 25%;
       bottom: 0;
-      left: 35%;
+      left: 25%;
+      background: #e22222;
+      clip-path: polygon(0 0, 50% 100%, 100% 0);
     }
 
-    /* 동쪽 삼각형 */
+    /* 동쪽 삼각형 (오른쪽) */
     .right {
-      border-top: 15% solid transparent;
-      border-bottom: 15% solid transparent;
-      border-left: 22% solid #28327d;
-      top: 35%;
+      width: 25%;
+      height: 50%;
+      top: 25%;
       right: 0;
+      background: #28327d;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
     }
 
-    /* 서쪽 삼각형 */
+    /* 서쪽 삼각형 (왼쪽, 흰색 + 테두리) */
     .left {
-      border-top: 15% solid transparent;
-      border-bottom: 15% solid transparent;
-      border-right: 22% solid #ffffff;
-      top: 35%;
+      width: 25%;
+      height: 50%;
+      top: 25%;
       left: 0;
-      color: black;
-      border-right-color: #ffffff;
-      border-width: 0;
+      background: #ffffff;
+      clip-path: polygon(100% 0, 0 50%, 100% 100%);
+      color: #000000;
+      border-left: 2px solid #000;
+      border-top: 2px solid #000;
+      border-bottom: 2px solid #000;
     }
-
-    /* 서쪽 테두리 */
-    .left::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 100%;
-      transform: translate(-50%, -50%);
-      width: 0;
-      height: 0;
-      border-top: 15% solid transparent;
-      border-bottom: 15% solid transparent;
-      border-right: 22% solid #000000;
-      z-index: -1;
-    }
-
-    /* 텍스트가 삼각형 중앙에 위치하도록 배치 */
-    .triangle span {
-      position: absolute;
-      transform: translateY(0);
-      line-height: 1.4;
-    }
-
   </style>
 </head>
 <body>
 
 <div class="wrapper">
-
-  <!-- 중앙 -->
+  <!-- 중앙 (황룡) -->
   <div class="center">
     중앙<br>토(土)<br>황룡
   </div>
 
-  <!-- 북 -->
+  <!-- 북쪽 -->
   <div class="triangle top">
-    <span>북쪽<br>수(水)<br>현무</span>
+    북쪽<br>수(水)<br>현무
   </div>
 
-  <!-- 동 -->
+  <!-- 동쪽 -->
   <div class="triangle right">
-    <span>동쪽<br>목(木)<br>청룡</span>
+    동쪽<br>목(木)<br>청룡
   </div>
 
-  <!-- 남 -->
+  <!-- 남쪽 -->
   <div class="triangle bottom">
-    <span>남쪽<br>화(火)<br>주작</span>
+    남쪽<br>화(火)<br>주작
   </div>
 
-  <!-- 서 -->
+  <!-- 서쪽 -->
   <div class="triangle left">
-    <span>서쪽<br>금(金)<br>백호</span>
+    서쪽<br>금(金)<br>백호
   </div>
-
 </div>
 
 </body>
