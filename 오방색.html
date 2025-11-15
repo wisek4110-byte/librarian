@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>오방색 다이아몬드 도형</title>
+  <title>오방색 도형 (삼각형·반응형)</title>
   <style>
     * {
       margin: 0;
@@ -19,27 +19,14 @@
       font-family: "Malgun Gothic", sans-serif;
     }
 
-    /* 전체 도형 박스: 화면 크기에 따라 자동 축소/확대 */
+    /* 전체 컨테이너 : 화면 비율에 따라 자동 크기 조정 */
     .wrapper {
       position: relative;
-      width: min(70vmin, 480px);  /* 화면 짧은 변의 70%, 최대 480px */
-      aspect-ratio: 1 / 1;        /* 항상 정사각형 유지 */
+      width: min(70vmin, 420px);
+      aspect-ratio: 1 / 1;  /* 항상 정사각형 */
     }
 
-    /* 텍스트 크기는 화면 크기에 맞춰 자동 조절 */
-    .center,
-    .diamond {
-      font-weight: bold;
-      text-align: center;
-      line-height: 1.5;
-      font-size: clamp(0.8rem, 2.2vmin, 1.4rem);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    /* 중앙 정사각형 (노란색) */
+    /* 중앙 노란 정사각형 */
     .center {
       position: absolute;
       width: 50%;
@@ -47,88 +34,126 @@
       top: 25%;
       left: 25%;
       background: #ffe600;
-      border: 0.1pt solid #000000;  /* 중앙도 아웃라인 주고 싶으면 유지, 아니면 이 줄 삭제 */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-weight: bold;
+      font-size: clamp(0.9rem, 2.4vmin, 1.4rem);
+      line-height: 1.5;
       z-index: 2;
     }
 
-    /* 다이아몬드 공통 (위/아래/좌/우) */
-    .diamond {
+    /* 공통 삼각형 스타일 (정사각형 바깥에만 위치) */
+    .triangle {
       position: absolute;
-      width: 50%;
-      height: 50%;
-      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-      border: 0.1pt solid #000000;  /* 요청하신 아웃라인 0.1pt */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-weight: bold;
+      font-size: clamp(0.8rem, 2.2vmin, 1.3rem);
+      line-height: 1.5;
+      color: #fff;
     }
 
-    /* 북 */
+    /* 북쪽 삼각형 (위쪽) */
     .top {
+      width: 50%;
+      height: 25%;
       top: 0;
       left: 25%;
       background: #000000;
-      color: #ffffff;
+      clip-path: polygon(0 100%, 50% 0, 100% 100%);
     }
 
-    /* 남 */
+    /* 남쪽 삼각형 (아래쪽) */
     .bottom {
-      top: 50%;
+      width: 50%;
+      height: 25%;
+      bottom: 0;
       left: 25%;
       background: #e22222;
-      color: #ffffff;
+      clip-path: polygon(0 0, 50% 100%, 100% 0);
     }
 
-    /* 동 */
+    /* 동쪽 삼각형 (오른쪽) */
     .right {
+      width: 25%;
+      height: 50%;
       top: 25%;
-      left: 50%;
+      right: 0;
       background: #28327d;
-      color: #ffffff;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
     }
 
-    /* 서 */
-    .left {
+    /* 서쪽 텍스트 위치용 박스 (투명) */
+    .left-label {
+      position: absolute;
+      width: 25%;
+      height: 50%;
       top: 25%;
       left: 0;
-      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-weight: bold;
+      font-size: clamp(0.8rem, 2.2vmin, 1.3rem);
+      line-height: 1.5;
       color: #000000;
+      pointer-events: none;
+      z-index: 2;
     }
+
+    /* 서쪽 삼각형 SVG 자체 위치 */
+    .left-triangle-svg {
+      position: absolute;
+      top: 25%;
+      left: 0;
+      width: 25%;
+      height: 50%;
+      z-index: 1;
+    }
+
   </style>
 </head>
 <body>
 
 <div class="wrapper">
-  <!-- 중앙 -->
+  <!-- 중앙 (황룡) -->
   <div class="center">
-    <span>중앙</span>
-    <span>토(土)</span>
-    <span>황룡(허규석)</span>
+    중앙<br>토(土)<br>황룡
   </div>
 
   <!-- 북쪽 -->
-  <div class="diamond top">
-    <span>북쪽</span>
-    <span>수(水)</span>
-    <span>현무(최유리)</span>
+  <div class="triangle top">
+    북쪽<br>수(水)<br>현무
   </div>
 
   <!-- 동쪽 -->
-  <div class="diamond right">
-    <span>동쪽</span>
-    <span>목(木)</span>
-    <span>청룡(서준혁)</span>
+  <div class="triangle right">
+    동쪽<br>목(木)<br>청룡
   </div>
 
   <!-- 남쪽 -->
-  <div class="diamond bottom">
-    <span>남쪽</span>
-    <span>화(火)</span>
-    <span>주작(김재천)</span>
+  <div class="triangle bottom">
+    남쪽<br>화(火)<br>주작
   </div>
 
-  <!-- 서쪽 -->
-  <div class="diamond left">
-    <span>서쪽</span>
-    <span>금(金)</span>
-    <span>백호(차백은)</span>
+  <!-- 서쪽 삼각형 SVG (흰색 + 아웃라인 0.1pt) -->
+  <svg class="left-triangle-svg" viewBox="0 0 100 200" preserveAspectRatio="none">
+    <!-- 오른쪽이 뾰족한 삼각형: (100,0) - (0,100) - (100,200) -->
+    <polygon points="100,0 0,100 100,200"
+             fill="#ffffff"
+             stroke="#000000"
+             stroke-width="0.1pt" />
+  </svg>
+
+  <!-- 서쪽 텍스트 -->
+  <div class="left-label">
+    서쪽<br>금(金)<br>백호
   </div>
 </div>
 
