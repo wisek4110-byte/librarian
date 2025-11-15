@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>오방색 도형 (삼각형·반응형)</title>
+  <title>오방색 도형 (삼각형·반응형·텍스트 보정)</title>
   <style>
     * {
       margin: 0;
@@ -19,11 +19,11 @@
       font-family: "Malgun Gothic", sans-serif;
     }
 
-    /* 전체 컨테이너 : 화면 비율에 따라 자동 크기 조정 */
+    /* 전체 컨테이너 */
     .wrapper {
       position: relative;
       width: min(70vmin, 420px);
-      aspect-ratio: 1 / 1;  /* 항상 정사각형 */
+      aspect-ratio: 1 / 1;
     }
 
     /* 중앙 노란 정사각형 */
@@ -45,7 +45,7 @@
       z-index: 2;
     }
 
-    /* 공통 삼각형 스타일 (정사각형 바깥에만 위치) */
+    /* 공통: 삼각형 + 텍스트 컨테이너 */
     .triangle {
       position: absolute;
       display: flex;
@@ -55,40 +55,74 @@
       font-weight: bold;
       font-size: clamp(0.8rem, 2.2vmin, 1.3rem);
       line-height: 1.5;
-      color: #fff;
+      color: #ffffff;
+      overflow: visible; /* 텍스트 잘리지 않도록 */
     }
 
-    /* 북쪽 삼각형 (위쪽) */
+    .triangle span {
+      position: relative;
+      z-index: 2; /* 배경 삼각형 위로 */
+      padding: 0.1em 0.2em;
+    }
+
+    /* 위쪽(북) */
     .top {
       width: 50%;
       height: 25%;
       top: 0;
       left: 25%;
-      background: #000000;
-      clip-path: polygon(0 100%, 50% 0, 100% 100%);
+      align-items: flex-end; /* 텍스트를 삼각형 아래쪽에 가깝게 */
+      padding-bottom: 4%;
     }
 
-    /* 남쪽 삼각형 (아래쪽) */
+    .top::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #000000;
+      clip-path: polygon(0 100%, 50% 0, 100% 100%);
+      z-index: 1;
+    }
+
+    /* 아래쪽(남) */
     .bottom {
       width: 50%;
       height: 25%;
       bottom: 0;
       left: 25%;
-      background: #e22222;
-      clip-path: polygon(0 0, 50% 100%, 100% 0);
+      align-items: flex-start;
+      padding-top: 4%;
     }
 
-    /* 동쪽 삼각형 (오른쪽) */
+    .bottom::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #e22222;
+      clip-path: polygon(0 0, 50% 100%, 100% 0);
+      z-index: 1;
+    }
+
+    /* 오른쪽(동) */
     .right {
       width: 25%;
       height: 50%;
       top: 25%;
       right: 0;
-      background: #28327d;
-      clip-path: polygon(0 0, 100% 50%, 0 100%);
+      justify-content: flex-start;
+      padding-left: 6%;
     }
 
-    /* 서쪽 텍스트 위치용 박스 (투명) */
+    .right::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #28327d;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+      z-index: 1;
+    }
+
+    /* 서쪽: 흰색 삼각형 + 0.1pt 아웃라인 (SVG) + 텍스트 */
     .left-label {
       position: absolute;
       width: 25%;
@@ -96,18 +130,18 @@
       top: 25%;
       left: 0;
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
       text-align: center;
       font-weight: bold;
       font-size: clamp(0.8rem, 2.2vmin, 1.3rem);
       line-height: 1.5;
       color: #000000;
+      padding-right: 6%;
       pointer-events: none;
       z-index: 2;
     }
 
-    /* 서쪽 삼각형 SVG 자체 위치 */
     .left-triangle-svg {
       position: absolute;
       top: 25%;
@@ -116,7 +150,6 @@
       height: 50%;
       z-index: 1;
     }
-
   </style>
 </head>
 <body>
@@ -129,22 +162,21 @@
 
   <!-- 북쪽 -->
   <div class="triangle top">
-    북쪽<br>수(水)<br>현무
+    <span>북쪽<br>수(水)<br>현무</span>
   </div>
 
   <!-- 동쪽 -->
   <div class="triangle right">
-    동쪽<br>목(木)<br>청룡
+    <span>동쪽<br>목(木)<br>청룡</span>
   </div>
 
   <!-- 남쪽 -->
   <div class="triangle bottom">
-    남쪽<br>화(火)<br>주작
+    <span>남쪽<br>화(火)<br>주작</span>
   </div>
 
   <!-- 서쪽 삼각형 SVG (흰색 + 아웃라인 0.1pt) -->
   <svg class="left-triangle-svg" viewBox="0 0 100 200" preserveAspectRatio="none">
-    <!-- 오른쪽이 뾰족한 삼각형: (100,0) - (0,100) - (100,200) -->
     <polygon points="100,0 0,100 100,200"
              fill="#ffffff"
              stroke="#000000"
