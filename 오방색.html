@@ -19,7 +19,7 @@
 
         .container {
             position: relative;
-            width: 400px;
+            width: 400px; /* 전체 컨테이너 너비 */
             padding: 20px;
             text-align: center;
         }
@@ -32,21 +32,26 @@
         }
 
         /* 다이어그램 전체 감싸기 */
+        /* 중앙 사각형 + 삼각형들을 포함하는 영역 */
+        /* 중앙 사각형 너비 200px + 좌우 삼각형 각 100px (밑변) = 총 400px */
+        /* 중앙 사각형 높이 200px + 상하 삼각형 각 100px (높이) = 총 400px */
         .diagram-wrap {
             position: relative;
-            width: 300px; /* 중앙 사각형의 크기 */
-            height: 300px;
+            width: 200px; /* 중앙 사각형의 기준 너비 */
+            height: 200px; /* 중앙 사각형의 기준 높이 */
             margin: 0 auto;
             display: flex;
             justify-content: center;
             align-items: center;
+            /* 테두리를 추가하여 전체 레이아웃 확인용 */
+            /* border: 1px dashed gray; */ 
         }
 
         /* 중앙 사각형 (Center) */
         .center {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            width: 100%; /* .diagram-wrap 기준 200px */
+            height: 100%; /* .diagram-wrap 기준 200px */
             background-color: #ffd700; /* 황색 */
             color: #333;
             display: flex;
@@ -59,11 +64,13 @@
             line-height: 1.5;
         }
 
-        /* 네 방향 삼각형 컨테이너 */
+        /* 네 방향 삼각형 컨테이너 (텍스트 위치 조절용) */
         .triangle {
             position: absolute;
-            width: 150px; /* 삼각형 너비 절반 */
-            height: 150px; /* 삼각형 높이 절반 */
+            /* width와 height는 텍스트를 담을 공간 정도로 사용. 
+               실제 삼각형 모양은 ::before 가상 요소로 만듦 */
+            width: 100px; /* 삼각형 밑변/높이의 절반 정도 */
+            height: 100px; /* 삼각형 밑변/높이의 절반 정도 */
             color: white;
             font-size: 0.9em;
             font-weight: bold;
@@ -73,10 +80,12 @@
             align-items: center;
             z-index: 0;
             line-height: 1.4;
-            overflow: hidden; 
+            /* overflow: hidden; */ /* 텍스트가 넘치면 잘라내기 */
         }
 
         /* CSS border 트릭을 이용해 삼각형 만들기 */
+        /* 삼각형 밑변 길이 = 중앙 사각형 변 길이 (200px)
+           삼각형 높이 = 중앙 사각형 변 길이의 절반 (100px) */
         .triangle::before {
             content: '';
             position: absolute;
@@ -86,62 +95,78 @@
             z-index: -1; /* 텍스트 뒤에 배경색 배치 */
         }
 
-        /* 북쪽(水/玄武): 검은색 삼각형 */
+        /* 북쪽(水/玄武): 검은색 삼각형 - 위쪽으로 튀어나옴 */
         .north {
-            top: -150px; 
-            left: 75px; 
+            top: -100px; /* 중앙 사각형 위쪽으로 삼각형 높이만큼 이동 */
+            left: 0;
+            width: 100%; /* 중앙 사각형의 너비와 일치하도록 */
+            height: 100px; /* 삼각형 높이와 동일 */
         }
         .north::before {
-            border-width: 150px 75px 0 75px; 
-            border-color: #000 transparent transparent transparent;
-            top: 0;
-            left: 0;
+            /* border-width: 높이 좌우 밑변 */
+            border-width: 0 100px 100px 100px; /* 위로 솟은 삼각형 (아랫변이 위로) */
+            border-color: transparent transparent #000 transparent;
+            top: 0; /* .north 기준으로 상단에 붙임 */
+            left: 0; /* .north 기준으로 좌측에 붙임 */
+            transform: translateY(-100%); /* .north 요소 상단으로 밀어올림 */
         }
         .north {
             color: white; 
         }
 
-        /* 동쪽(木/青龍): 파란색 삼각형 */
+        /* 동쪽(木/青龍): 파란색 삼각형 - 오른쪽으로 튀어나옴 */
         .east {
-            top: 75px;
-            right: -150px; 
+            top: 0;
+            right: -100px; /* 중앙 사각형 오른쪽으로 삼각형 높이만큼 이동 */
+            width: 100px; /* 삼각형 높이와 동일 */
+            height: 100%; /* 중앙 사각형의 높이와 일치하도록 */
         }
         .east::before {
-            border-width: 75px 0 75px 150px; 
+            /* border-width: 위쪽 좌측 아랫쪽 우측 */
+            border-width: 100px 0 100px 0; /* 좌측에 붙는 삼각형 */
             border-color: transparent transparent transparent #000080;
-            top: 0;
-            left: 0;
+            left: 0; /* .east 기준으로 좌측에 붙임 */
+            top: 0; /* .east 기준으로 상단에 붙임 */
+            transform: translateX(100%); /* .east 요소 우측으로 밀어냄 */
         }
         .east {
             color: white; 
         }
 
-        /* 남쪽(火/朱雀): 빨간색 삼각형 */
+        /* 남쪽(火/朱雀): 빨간색 삼각형 - 아래쪽으로 튀어나옴 */
         .south {
-            bottom: -150px; 
-            left: 75px;
+            bottom: -100px; /* 중앙 사각형 아래쪽으로 삼각형 높이만큼 이동 */
+            left: 0;
+            width: 100%; /* 중앙 사각형의 너비와 일치하도록 */
+            height: 100px; /* 삼각형 높이와 동일 */
         }
         .south::before {
-            border-width: 0 75px 150px 75px; 
-            border-color: transparent transparent #cc0000 transparent;
-            top: 0;
-            left: 0;
+            /* border-width: 높이 좌우 밑변 */
+            border-width: 100px 100px 0 100px; /* 아래로 솟은 삼각형 (윗변이 아래로) */
+            border-color: #cc0000 transparent transparent transparent;
+            top: 0; /* .south 기준으로 상단에 붙임 */
+            left: 0; /* .south 기준으로 좌측에 붙임 */
+            transform: translateY(100%); /* .south 요소 하단으로 밀어내림 */
         }
         .south {
             color: white; 
         }
 
-        /* 서쪽(金/白虎): 흰색 삼각형 */
+        /* 서쪽(金/白虎): 흰색 삼각형 - 왼쪽으로 튀어나옴 */
         .west {
-            top: 75px;
-            left: -150px; 
-            color: #333; 
+            top: 0;
+            left: -100px; /* 중앙 사각형 왼쪽으로 삼각형 높이만큼 이동 */
+            width: 100px; /* 삼각형 높이와 동일 */
+            height: 100%; /* 중앙 사각형의 높이와 일치하도록 */
+            color: #333; /* 텍스트 색상을 검은색 계열로 */
         }
         .west::before {
-            border-width: 75px 150px 75px 0; 
+            /* border-width: 위쪽 좌측 아랫쪽 우측 */
+            border-width: 100px 0 100px 0; /* 우측에 붙는 삼각형 */
             border-color: transparent #ffffff transparent transparent;
-            top: 0;
-            left: 0;
+            left: 0; /* .west 기준으로 좌측에 붙임 */
+            top: 0; /* .west 기준으로 상단에 붙임 */
+            transform: translateX(-100%); /* .west 요소 좌측으로 밀어올림 */
         }
 
         /* 저작권 문구 스타일 */
@@ -178,5 +203,6 @@
             <div class="triangle west white">
                 서쪽<br>금(金)<br>백호
             </div>
+
 </body>
 </html>
