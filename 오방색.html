@@ -1,208 +1,134 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오정색(五正色) 다이어그램</title>
-    
-    <style>
-        /* 전체 레이아웃 설정 */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
-            background-color: #f0f0f0;
-        }
+  <meta charset="UTF-8">
+  <title>오방색 도형</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .container {
-            position: relative;
-            width: 400px; /* 전체 컨테이너 너비 */
-            padding: 20px;
-            text-align: center;
-        }
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+      background: #ffffff;
+    }
 
-        .title {
-            font-size: 1.5em;
-            font-weight: bold;
-            text-align: left;
-            margin-bottom: 20px;
-        }
+    .obang-wrapper {
+      position: relative;
+      width: 420px;
+      height: 420px;
+    }
 
-        /* 다이어그램 전체 감싸기 */
-        /* 중앙 사각형 + 삼각형들을 포함하는 영역 */
-        /* 중앙 사각형 너비 200px + 좌우 삼각형 각 100px (밑변) = 총 400px */
-        /* 중앙 사각형 높이 200px + 상하 삼각형 각 100px (높이) = 총 400px */
-        .diagram-wrap {
-            position: relative;
-            width: 200px; /* 중앙 사각형의 기준 너비 */
-            height: 200px; /* 중앙 사각형의 기준 높이 */
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* 테두리를 추가하여 전체 레이아웃 확인용 */
-            /* border: 1px dashed gray; */ 
-        }
+    .center-box {
+      position: absolute;
+      top: 110px;
+      left: 110px;
+      width: 200px;
+      height: 200px;
+      background: #ffe600;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+    }
 
-        /* 중앙 사각형 (Center) */
-        .center {
-            position: absolute;
-            width: 100%; /* .diagram-wrap 기준 200px */
-            height: 100%; /* .diagram-wrap 기준 200px */
-            background-color: #ffd700; /* 황색 */
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.1em;
-            font-weight: bold;
-            z-index: 1; /* 중앙에 배치 */
-            line-height: 1.5;
-        }
+    .center-box span {
+      display: block;
+      line-height: 1.4;
+    }
 
-        /* 네 방향 삼각형 컨테이너 (텍스트 위치 조절용) */
-        .triangle {
-            position: absolute;
-            /* width와 height는 텍스트를 담을 공간 정도로 사용. 
-               실제 삼각형 모양은 ::before 가상 요소로 만듦 */
-            width: 100px; /* 삼각형 밑변/높이의 절반 정도 */
-            height: 100px; /* 삼각형 밑변/높이의 절반 정도 */
-            color: white;
-            font-size: 0.9em;
-            font-weight: bold;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 0;
-            line-height: 1.4;
-            /* overflow: hidden; */ /* 텍스트가 넘치면 잘라내기 */
-        }
+    .diamond {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
 
-        /* CSS border 트릭을 이용해 삼각형 만들기 */
-        /* 삼각형 밑변 길이 = 중앙 사각형 변 길이 (200px)
-           삼각형 높이 = 중앙 사각형 변 길이의 절반 (100px) */
-        .triangle::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-style: solid;
-            z-index: -1; /* 텍스트 뒤에 배경색 배치 */
-        }
+    .diamond span {
+      display: block;
+      line-height: 1.6;
+      font-size: 18px;
+      font-weight: 600;
+    }
 
-        /* 북쪽(水/玄武): 검은색 삼각형 - 위쪽으로 튀어나옴 */
-        .north {
-            top: -100px; /* 중앙 사각형 위쪽으로 삼각형 높이만큼 이동 */
-            left: 0;
-            width: 100%; /* 중앙 사각형의 너비와 일치하도록 */
-            height: 100px; /* 삼각형 높이와 동일 */
-        }
-        .north::before {
-            /* border-width: 높이 좌우 밑변 */
-            border-width: 0 100px 100px 100px; /* 위로 솟은 삼각형 (아랫변이 위로) */
-            border-color: transparent transparent #000 transparent;
-            top: 0; /* .north 기준으로 상단에 붙임 */
-            left: 0; /* .north 기준으로 좌측에 붙임 */
-            transform: translateY(-100%); /* .north 요소 상단으로 밀어올림 */
-        }
-        .north {
-            color: white; 
-        }
+    .diamond.top {
+      top: 10px;
+      left: 110px;
+      background: #000000;
+      color: #ffffff;
+    }
 
-        /* 동쪽(木/青龍): 파란색 삼각형 - 오른쪽으로 튀어나옴 */
-        .east {
-            top: 0;
-            right: -100px; /* 중앙 사각형 오른쪽으로 삼각형 높이만큼 이동 */
-            width: 100px; /* 삼각형 높이와 동일 */
-            height: 100%; /* 중앙 사각형의 높이와 일치하도록 */
-        }
-        .east::before {
-            /* border-width: 위쪽 좌측 아랫쪽 우측 */
-            border-width: 100px 0 100px 0; /* 좌측에 붙는 삼각형 */
-            border-color: transparent transparent transparent #000080;
-            left: 0; /* .east 기준으로 좌측에 붙임 */
-            top: 0; /* .east 기준으로 상단에 붙임 */
-            transform: translateX(100%); /* .east 요소 우측으로 밀어냄 */
-        }
-        .east {
-            color: white; 
-        }
+    .diamond.right {
+      top: 110px;
+      left: 210px;
+      background: #28327d; /* 진한 남보라색 계열 */
+      color: #ffffff;
+    }
 
-        /* 남쪽(火/朱雀): 빨간색 삼각형 - 아래쪽으로 튀어나옴 */
-        .south {
-            bottom: -100px; /* 중앙 사각형 아래쪽으로 삼각형 높이만큼 이동 */
-            left: 0;
-            width: 100%; /* 중앙 사각형의 너비와 일치하도록 */
-            height: 100px; /* 삼각형 높이와 동일 */
-        }
-        .south::before {
-            /* border-width: 높이 좌우 밑변 */
-            border-width: 100px 100px 0 100px; /* 아래로 솟은 삼각형 (윗변이 아래로) */
-            border-color: #cc0000 transparent transparent transparent;
-            top: 0; /* .south 기준으로 상단에 붙임 */
-            left: 0; /* .south 기준으로 좌측에 붙임 */
-            transform: translateY(100%); /* .south 요소 하단으로 밀어내림 */
-        }
-        .south {
-            color: white; 
-        }
+    .diamond.bottom {
+      top: 210px;
+      left: 110px;
+      background: #e22222;
+      color: #ffffff;
+    }
 
-        /* 서쪽(金/白虎): 흰색 삼각형 - 왼쪽으로 튀어나옴 */
-        .west {
-            top: 0;
-            left: -100px; /* 중앙 사각형 왼쪽으로 삼각형 높이만큼 이동 */
-            width: 100px; /* 삼각형 높이와 동일 */
-            height: 100%; /* 중앙 사각형의 높이와 일치하도록 */
-            color: #333; /* 텍스트 색상을 검은색 계열로 */
-        }
-        .west::before {
-            /* border-width: 위쪽 좌측 아랫쪽 우측 */
-            border-width: 100px 0 100px 0; /* 우측에 붙는 삼각형 */
-            border-color: transparent #ffffff transparent transparent;
-            left: 0; /* .west 기준으로 좌측에 붙임 */
-            top: 0; /* .west 기준으로 상단에 붙임 */
-            transform: translateX(-100%); /* .west 요소 좌측으로 밀어올림 */
-        }
-
-        /* 저작권 문구 스타일 */
-        .copyright {
-            margin-top: 30px;
-            font-size: 0.8em;
-            color: #666;
-            text-align: center;
-        }
-    </style>
-    </head>
+    .diamond.left {
+      top: 110px;
+      left: 10px;
+      background: #ffffff;
+      border: 2px solid #000000;
+      color: #000000;
+    }
+  </style>
+</head>
 <body>
+  <div class="obang-wrapper">
+    <!-- 중앙 -->
+    <div class="center-box">
+      <span>중앙</span>
+      <span>토(土)</span>
+      <span>황룡</span>
+    </div>
 
-    <div class="container">
-        <div class="title">*오정색</div>
+    <!-- 북쪽 -->
+    <div class="diamond top">
+      <span>북쪽</span>
+      <span>수(水)</span>
+      <span>현무</span>
+    </div>
 
-        <div class="diagram-wrap">
-            <div class="center yellow">
-                중앙<br>토(土)<br>황룡
-            </div>
+    <!-- 동쪽 -->
+    <div class="diamond right">
+      <span>동쪽</span>
+      <span>목(木)</span>
+      <span>청룡</span>
+    </div>
 
-            <div class="triangle north black">
-                북쪽<br>수(水)<br>현무
-            </div>
+    <!-- 남쪽 -->
+    <div class="diamond bottom">
+      <span>남쪽</span>
+      <span>화(火)</span>
+      <span>주작</span>
+    </div>
 
-            <div class="triangle east blue">
-                동쪽<br>목(木)<br>청룡
-            </div>
-
-            <div class="triangle south red">
-                남쪽<br>화(火)<br>주작
-            </div>
-
-            <div class="triangle west white">
-                서쪽<br>금(金)<br>백호
-            </div>
-
+    <!-- 서쪽 -->
+    <div class="diamond left">
+      <span>서쪽</span>
+      <span>금(金)</span>
+      <span>백호</span>
+    </div>
+  </div>
 </body>
 </html>
